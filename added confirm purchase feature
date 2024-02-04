@@ -1,0 +1,55 @@
+inventory = ["takis", "cheetos", "skittles", "juice"]
+snacks = []
+prices = [1, 2, 2, 1]
+amount = [5, 3, 4, 10]
+total = 0
+
+snack_amount = int(input("How many snacks do you want?: "))
+
+
+def purchase():
+    global total
+    total = 0
+    for i in range(snack_amount):
+        snack_choice = input("What snack do you want?: ").lower()
+        while len(snack_choice) == 0:
+            snack_choice = input("What snack do you want?: ").lower()
+        for j in range(len(inventory)):
+            if inventory[j] == snack_choice:
+                if amount[j] > 0:
+                    snacks.append(snack_choice)
+                    amount[j] -= 1
+                    total += prices[j]
+                elif amount[j] == 0:
+                    snack_choice = input("No more " + inventory[j] + " are left pick something else: ").lower()
+
+    repeat = input("Is that all?: ").lower()
+
+    if repeat[0].lower() == "y":
+        checkForEnd()
+
+    while repeat[0].lower() == "n":
+        snack_choice = input("What else do you want?: ").lower()
+        repeat = input("Is that all?: ").lower()
+
+
+def checkForEnd():
+    global total
+    verify = input("Type r to reset, or type c to confirm transaction: ")
+    if verify[0] == "r":
+        snacks.clear()
+        input("Your cart has been reset, would you like to order again?: ")
+    elif verify[0] == "c":
+        print("CONFIRMED YOUR TOTAL IS $" + str(total))
+        for i in range(len(amount)):
+            print(str(amount[i]) + " " + str(inventory[i]) + " are left")
+        for i in range(len(snacks)):
+            if len(snacks) == 1:
+                print(snacks[i], end="")
+                print(" is in your cart.")
+            elif len(snacks) > 1:
+                print(snacks[i] + ", ", end="")
+        print("Your total is $" + str(total))
+
+
+purchase()
