@@ -1,0 +1,36 @@
+inventory = ["takis", "cheetos", "skittles", "juice"]
+snacks = []
+prices = [1, 2, 2, 1]
+amount = [5, 3, 4, 10]
+total = 0
+
+snack_amount = int(input("How many snacks do you want?: "))
+
+for i in range(snack_amount):
+    snack_choice = input("What snack do you want?: ").lower()
+    while len(snack_choice) == 0:
+        snack_choice = input("What snack do you want?: ").lower()
+    for j in range(len(inventory)):
+        if inventory[j] == snack_choice:
+            if amount[j] > 0:
+                snacks.append(snack_choice)
+                amount[j] -= 1
+                total += prices[j]
+            elif amount[j] == 0:
+                snack_choice = input("No more " + inventory[j] + " are left pick something else: ").lower()
+
+repeat = input("Is that all?: ").lower()
+
+if repeat[0].lower() == "y":
+    for i in range(len(amount)):
+        print(str(amount[i]) + " " + str(inventory[i]) + " are left")
+    print("You have", end="")
+    for i in range(len(snacks)):
+        print(", "+snacks[i], end="")
+    print(" in your cart.")
+    print("Your total is $" + str(total))
+
+
+while repeat[0].lower() == "n":
+    snack_choice = input("What else do you want?: ").lower()
+    repeat = input("Is that all?: ").lower()
